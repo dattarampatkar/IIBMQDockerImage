@@ -1,0 +1,4 @@
+@version: 3.5
+source s_local { file("/var/log/syslog" follow-freq(1)); };
+destination d_syslog_udp { syslog("172.32.0.43" transport("udp") port(514)); };
+log { source(s_local);destination(d_syslog_udp); };

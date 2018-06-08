@@ -1,0 +1,8 @@
+
+;# DB2 stanza
+[^DB_ALIAS_FOR_BROKER^]
+DRIVER=^DB_CLI_DRIVER_PATH^
+Description=IBM DB2 ODBC Database
+Database=^DB_ALIAS_FOR_BROKER^ 
+
+

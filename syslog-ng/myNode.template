@@ -1,0 +1,42 @@
+################################################################################
+#
+# Configure script to set following placeholders
+#	^LOG_USER^		- Owner user
+#	^LOG_GROUP^		- Owner group
+#	^LOG_FILEPATH^		- Log file template holder
+#	^UDP_PORT^		- UDP Port for accpeting syslog messages	
+#
+################################################################################
+
+options {
+        create_dirs(yes);
+        owner(^LOG_USER^);
+        group(^LOG_GROUP^);
+        perm(0640);
+        dir_owner(^LOG_USER^);
+        dir_group(^LOG_GROUP^);
+        dir_perm(0750);
+};
+ 
+ 
+##################################################
+source s_udp {
+        udp(port(^UDP_PORT^));
+};
+
+##################################################
+filter f_pocv8 {
+        host("172.32.0.36");
+};
+
+destination d_filepath {
+        #file("/var/log/muNodes/$HOST/$YEAR-$MONTH-$DAY.NAMEOFTHEFIREWALL.log");
+	file("^LOG_FILEPATH^");
+};           
+             
+log {        
+        source(s_udp);
+#        filter(f_pocv8);
+        destination(d_filepath);
+};           
+
